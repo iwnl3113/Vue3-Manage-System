@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue-Manage-System</title>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_830376_qzecyukz0s.css">
+  </head>
+
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+          Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+    <!-- built files will be auto injected -->
+  </body>
+  <script>
+    function formatDate(fmt){
+      const date = new Date()
+      const o = {
+        'Y+': date.getFullYear(),
+        'M+': date.getMonth() + 1, // 月
+        'D+': date.getDate(), // 日
+        'h+': date.getHours(), // 时
+        'm+': date.getMinutes(), // 分
+        's+': date.getSeconds(), // 秒
+        W: date.getDay() // 周
+      }
+      for (let k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, () => {
+            if (k === 'W') {
+              // 星期几
+              const week = ['日', '一', '二', '三', '四', '五', '六']
+              return week[o[k]]
+            } else if (k === 'Y+' || RegExp.$1.length === 1) {
+              // 年份 or 小于10不加0
+              return o[k]
+            } else {
+              return ('00' + o[k]).substr(('' + o[k]).length) // 小于10补位0
+            }
+          })
+        }
+      }
+      return fmt
+    }
+    console.log(formatDate('YY'));
+  </script>
+
+</html>
